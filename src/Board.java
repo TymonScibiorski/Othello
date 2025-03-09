@@ -1,5 +1,6 @@
 public class Board {
     //0 - nothing; 1 - black; 2 - white.
+    //The board is 8x8
     private final int[][] board;
     private final int size = 8;
 
@@ -24,15 +25,15 @@ public class Board {
         board[4][3] = 2;
     }
 
-    private boolean isPlaceValid(int x, int y) {
+    private boolean isPlaceValid(int x, int y, int colour) {
         //podejscie nr 1
         //bool is empty
         //bool czy przylega do chociaż jednego nieswojego (xy swój i xy tego nieswojego) -> <-
         //bool czy możesz go obrócić
         //if ze wszystkich
 
-        boolean isOnEmptySpace = board[x][y] != 0;
-        boolean isNextToOtherColor;
+        boolean isOnEmptySpace = board[y][x] != 0;
+        boolean isNextToOtherColor = touchesOtherColor(x, y, colour);
         boolean isNextToOtherColor2;
         boolean isNextToOtherColor3;
         boolean isNextToOtherColor4;
@@ -48,8 +49,62 @@ public class Board {
         //todo: add additional validity checks
     }
 
-    private void putNewPiece(int x, int y, int value){
-        board[x][y] = value;
+    private boolean touchesOtherColor(int x, int y, int colour) {
+        int otherColour = 1;
+        if (colour == 1){
+            otherColour = 2;
+        }
+
+        if (y != 0) { //check row above, if there is one
+            if (x != 0) {
+                if (board[y-1][x-1] == otherColour) {
+                    return true;
+                }
+            }
+            if (board[y-1][x] == otherColour) {
+                return true;
+            }
+            if (x != 8) {
+                if (board[y-1][x+1] == otherColour) {
+                    return true;
+                }
+            }
+        }
+
+        //check left and right, if piece that is to be placed isn't on the edge
+        if (x != 0) {
+            if (board[y][x-1] == otherColour) {
+                return true;
+            }
+        }
+        if (x != 8) {
+            if (board[y][x+1] == otherColour) {
+                return true;
+            }
+        }
+
+        if (y != 8) { //check row below, if there is one
+            if (x != 0) {
+                if (board[y+1][x-1] == otherColour) {
+                    return true;
+                }
+            }
+            if (board[y+1][x] == otherColour) {
+                return true;
+            }
+            if (x != 8) {
+                if (board[y+1][x+1] == otherColour) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
+
+    private void putNewPiece(int x, int y, int colour){
+        board[y][x] = colour;
+    }
+
 
 }
