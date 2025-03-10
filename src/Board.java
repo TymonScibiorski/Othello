@@ -118,7 +118,9 @@ public class Board {
     }
 
     private void putNewPiece(int x, int y, int colour){
-        board[y][x] = colour;
+        if (isPlaceValid(x, y, colour)) {
+            board[y][x] = colour;
+        }
     }
 
 
