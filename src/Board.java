@@ -26,26 +26,14 @@ public class Board {
     }
 
     private boolean isPlaceValid(int x, int y, int colour) {
-        //podejscie nr 1
-        //Pod koniec if ze wszystkich
-
-        //podejscie nr2
-        //ciag ifów które sprwdzają warunke, jeśli nie valid to return false
-        //na końcu funkcji return true
-
         boolean isSpaceEmpty = board[y][x] == 0;
-        boolean isNextToOtherColor = touchesOtherColor(x, y, colour);
+        boolean isNextToDifferentColor = touchesOtherColor(x, y, colour);
         boolean canRotateSomething = canRotateSomething(x, y, colour);
 
-
-        if (!isSpaceEmpty) {
-            return false;
+        if (isSpaceEmpty && isNextToDifferentColor && canRotateSomething) {
+            return true;
         }
-        return true;
-        //todo: add additional validity checks
-        //bool is empty DONE
-        //bool czy przylega do chociaż jednego nieswojego (xy swój i xy tego nieswojego) -> <- DONE
-        //bool czy może coś obrócić
+        return false;
     }
 
     private boolean touchesOtherColor(int x, int y, int colour) {
