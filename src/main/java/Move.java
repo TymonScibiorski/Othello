@@ -8,6 +8,12 @@ public class Move {
     @JsonProperty("colour")
     private int colour;
 
+    public Move(int row, int column, int colour) {
+        this.row = row;
+        this.column = column;
+        this.colour = colour;
+    }
+
     public int getRow() {
         return row;
     }
