@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
     //0 - nothing; 1 - black; 2 - white.
@@ -11,12 +12,17 @@ public class Board {
         initialiseBoard();
     }
 
-    private void initialiseBoard() {
+    void initialiseBoard() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 board[i][j] = 0;
             }
         }
+//        for (int i = 1; i < 7; i++) {
+//            board[i][0] = 1;
+//            board[0][i] = 1;
+//        }
+//        board[0][0] = 2;
         setStartingPositions();
     }
 
@@ -27,28 +33,31 @@ public class Board {
         board[4][3] = 2;
     }
 
-    public boolean isPlaceValid(Move move) {
+    public boolean performMove(Move move) {
         boolean isSpaceEmpty = board[move.getRow()][move.getColumn()] == 0;
-//        boolean isNextToDifferentColor = touchesOtherColor(x, y, colour);
-//        boolean canRotateSomething = getValidRotations()
-
-        return isSpaceEmpty && !getValidRotations(move).isEmpty();
+        List<Rotation> rotations = getValidRotations(move);
+        if (isSpaceEmpty && !getValidRotations(move).isEmpty()) {
+            board[move.getRow()][move.getColumn()] = move.getColour();
+            performRotations(move, rotations);
+            return true;
+        }
+        return false;
     }
 
-    public void doMove(Move move) {
-        this.board[move.getRow()][move.getColumn()] = move.getColour();
-    }
+//    public void doMove(Move move) {
+//        this.board[move.getRow()][move.getColumn()] = move.getColour();
+//    }
 
     public ArrayList<Rotation> getValidRotations(Move move) {
         ArrayList<Rotation> rotations = new ArrayList<>();
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if(i == 0 && j == 0){
+        for (int yOffset = -1; yOffset <= 1; yOffset++) {
+            for (int xOffset = -1; xOffset <= 1; xOffset++) {
+                if (yOffset == 0 && xOffset == 0) {
                     continue;
                 }
-                int rotationLength = checkRotationLength(move, i, j);
+                int rotationLength = checkRotationLength(move, yOffset, xOffset);
                 if (rotationLength > 0) {
-                    rotations.add(new Rotation(move.getRow(), move.getColumn(), i, j, rotationLength));
+                    rotations.add(new Rotation(move.getRow(), move.getColumn(), yOffset, xOffset, rotationLength));
                 }
             }
         }
@@ -56,23 +65,29 @@ public class Board {
         return rotations;
     }
 
-    public int checkRotationLength(Move move, int xOffset, int yOffset) {
-        if (isTooCloseToEdge(move, xOffset, yOffset)) {
+    public int checkRotationLength(Move move, int yOffset, int xOffset) {
+        if (isTooCloseToEdge(move, yOffset, xOffset)) {
             return 0;
         }
-        if (!isNeighbourNotEmptyAndDifferentColour(move, xOffset, yOffset)) {
-            System.out.println("dupa");
-            return walkTheRotation(move, xOffset, yOffset, 1);
+//        System.out.print("dupa");
+        if (isNeighbourNotEmptyAndDifferentColour(move, xOffset, yOffset)) {
+            System.out.println(move);
+            System.out.print("yo: " + yOffset + " ");
+            System.out.println("xo: " + xOffset);
+            return walkTheRotation(move, yOffset, xOffset, 1);
         }
         return 0;
     }
 
     public int walkTheRotation(Move move, int yDirection, int xDirection, int step) {
-        int newY = move.getColumn() + (yDirection * step);
-        int newX = move.getRow() + (xDirection * step);
+        int newY = move.getRow() + (yDirection * step);
+        int newX = move.getColumn() + (xDirection * step);
         //fixme add check for same color!
+        if(newY == board.length || newX == board.length || newY < 0 || newX < 0){
+            return -10;
+        }
         if (board[newY][newX] == Colour.EMPTY.getValue()) {
-            return 0;
+            return -10;
         } else if (board[newY][newX] != move.getColour()) {
             return 1 + walkTheRotation(move, yDirection, xDirection, step + 1);
         } else {
@@ -81,12 +96,12 @@ public class Board {
     }
 
     private boolean isNeighbourNotEmptyAndDifferentColour(Move move, int yDirection, int xDirection) {
-        int newY = move.getColumn() + yDirection;
-        int newX = move.getRow() + xDirection;
+        int newX = move.getColumn() + yDirection;
+        int newY = move.getRow() + xDirection;
         return board[newY][newX] != Colour.EMPTY.getValue() && board[newY][newX] != move.getColour();
     }
 
-    private boolean isTooCloseToEdge(Move move, int xOffset, int yOffset) {
+    private boolean isTooCloseToEdge(Move move, int yOffset, int xOffset) {
         if (xOffset < 0 && move.isLeftEdge()) {
             return true;
         }
@@ -100,6 +115,16 @@ public class Board {
             return true;
         }
         return false;
+    }
+
+    private void performRotations(Move move, List<Rotation> rotations) {
+        for (Rotation r : rotations) {
+            for (int i = 1; i <= r.length(); i++) {
+                int offsetX = i * r.directionX();
+                int offsetY = i * r.directionY();
+                board[move.getRow() + offsetY][move.getColumn() + offsetX] = move.getColour();
+            }
+        }
     }
 
 
@@ -162,7 +187,7 @@ public class Board {
         //not touching xy
 
         for (int i = 0; i < size; i++) {
-            if (i != x-1 && )
+
             if (i != x - 1 && i != x + 1 && board[y][i] == colour) {
                 return true;
             }

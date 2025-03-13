@@ -8,6 +8,9 @@ public class Move {
     @JsonProperty("colour")
     private int colour;
 
+    public Move() {
+    }
+
     public Move(int row, int column, int colour) {
         this.row = row;
         this.column = column;
@@ -40,5 +43,14 @@ public class Move {
 
     public boolean isRightEdge(){
         return column > 5;
+    }
+
+    @Override
+    public String toString() {
+        return "Move{" +
+                "row=" + row +
+                ", column=" + column +
+                ", colour=" + colour +
+                '}';
     }
 }
