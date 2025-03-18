@@ -1,3 +1,5 @@
+package pl.tymsiwojts;
+
 public enum Colour {
     EMPTY(0), WHITE(1), BLACK(2);
 

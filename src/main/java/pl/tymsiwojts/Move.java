@@ -1,3 +1,5 @@
+package pl.tymsiwojts;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Move {
@@ -47,7 +49,7 @@ public class Move {
 
     @Override
     public String toString() {
-        return "Move{" +
+        return "pl.tymiwojts.Move{" +
                 "row=" + row +
                 ", column=" + column +
                 ", colour=" + colour +

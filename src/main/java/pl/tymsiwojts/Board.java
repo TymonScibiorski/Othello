@@ -1,3 +1,5 @@
+package pl.tymsiwojts;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class Board {
         return false;
     }
 
-//    public void doMove(Move move) {
+//    public void doMove(pl.tymiwojts.Move move) {
 //        this.board[move.getRow()][move.getColumn()] = move.getColour();
 //    }
 

@@ -33,7 +33,7 @@ bin/
 /target/classes/Main.class
 /target/classes/Move.class
 /target/classes/OthelloController.class
-/target/classes/Rotation.class
+/target/classes/pl.tymiwojts.Rotation.class
 /target/maven-archiver/pom.properties
 /target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
 /target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst

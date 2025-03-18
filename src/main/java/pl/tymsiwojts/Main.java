@@ -1,3 +1,5 @@
+package pl.tymsiwojts;
+
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.plugin.bundled.CorsPluginConfig;
@@ -36,7 +38,7 @@ public class Main {
                     long t1 = System.currentTimeMillis();
                             handleMove(ctx);
                     long t2 = System.currentTimeMillis();
-                    log.info("Move took: {}", t2 - t1);
+                    log.info("pl.tymiwojts.Move took: {}", t2 - t1);
                         }
                 );
                 delete("/board", ctx -> {
@@ -95,7 +97,7 @@ public class Main {
         }
 //        }
 
-//        Main.board[move.getRow() + 1][move.getColumn() + 1] = 2;
+//        pl.tymiwojts.Main.board[move.getRow() + 1][move.getColumn() + 1] = 2;
 //        ctx.json("OK");
 //        ctx.status(200);
     }
