@@ -27,3 +27,16 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/target/classes/Board.class
+/target/classes/BoardTest.class
+/target/classes/Colour.class
+/target/classes/Main.class
+/target/classes/Move.class
+/target/classes/OthelloController.class
+/target/classes/Rotation.class
+/target/maven-archiver/pom.properties
+/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
+/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+/target/Othello-1.0-SNAPSHOT.twojastara
